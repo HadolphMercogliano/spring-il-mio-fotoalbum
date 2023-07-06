@@ -1,13 +1,16 @@
 package com.learning.java.springIlMioFotoalbum.controller;
 
 import com.learning.java.springIlMioFotoalbum.model.Category;
+import com.learning.java.springIlMioFotoalbum.model.Photo;
 import com.learning.java.springIlMioFotoalbum.repository.CategoryRepo;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,4 +41,29 @@ public class CategoryController {
     model.addAttribute("categoryObj", categoryObj);
     return "/categories/index";
   }
+  
+  @PostMapping("/save")
+  public String save(@Valid @ModelAttribute("ingredientObj") Category categoryForm, BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("categories", categoryRepo.findAll());
+      return "/categories/index";
+    }
+    categoryRepo.save(categoryForm);
+    return "redirect:/categories";
   }
+  
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable Integer id) {
+    // prima di eliminare la categoria bisogna dissociarla dalle foto.
+    Optional<Category> result = categoryRepo.findById(id);
+    if (result.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+    Category categoryToDelete = result.get();
+    for (Photo photo : categoryToDelete.getPhotos()) {
+      photo.getCategories().remove(categoryToDelete);
+    }
+    categoryRepo.deleteById(id);
+    return "redirect:/categories";
+  }
+}
