@@ -5,7 +5,54 @@
   <body>
     <div class="container">
       <nav th:replace="~{/fragments/navbar :: navbar(current='Categorie')}"></nav>
-      <h1>ciao categorie</h1>
+      <h1>Categorie</h1>
+      <div class="row my-3">
+        <div class="col-6">
+          <h4>Lista categorie</h4>
+          <ul class="list-group" th:if="${categories.size > 0}">
+            <li class="list-group-item d-flex align-items-center justify-content-between"
+                th:each="cat : ${categories}"
+                th:object="${cat}">
+              <div>
+                <h5 th:text="*{name}"></h5>
+              </div>
+              <div class="d-flex">
+                <a th:href="@{/categories(edit=*{id})}" class="btn btn-primary px-2 py-1 me-1"><i
+                        class="fa-solid fa-pen-to-square"></i></a>
+                <form method="post" th:action="@{|/categories/delete/*{id}|}">
+                  <button class="btn btn-danger px-2 py-1" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+              </div>
+            </li>
+          </ul>
+          <div class="alert alert-info" th:unless="${categories.size > 0}">
+            Non ci sono categorie
+          </div>
+        </div>
+        
+        <div class="col-6">
+          <p>Aggiungi categoria</p>
+          <form th:action="@{/categories/save}" id="category-form" method="post" th:object="${categoryObj}">
+            <div class="">
+              <input type="hidden" th:field="*{id}">
+              <label class="form-label" for="categories">Nome categoria*</label>
+              <input class="form-control" type="text" id="categories" th:field="*{name}"
+                     th:errorClass="is-invalid">
+              <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                <ul>
+                  <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="my-2">
+              <button class="btn btn-success me-1" type="submit">Salva</button>
+              <a class="btn btn-secondary" th:href="@{/categories}">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    
     </div>
   </body>
 </html>

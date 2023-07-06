@@ -2,6 +2,7 @@ package com.learning.java.springIlMioFotoalbum.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -16,7 +17,7 @@ public class Category {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   
-  @NotNull
+  @NotBlank(message = "Il nome della categoria è obbligatorio")
   @Size(min = 2, max = 80)
   @Column(nullable = false)
   private String name;

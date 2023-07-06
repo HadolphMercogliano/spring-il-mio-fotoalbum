@@ -43,12 +43,12 @@ public class CategoryController {
   }
   
   @PostMapping("/save")
-  public String save(@Valid @ModelAttribute("ingredientObj") Category categoryForm, BindingResult bindingResult, Model model) {
+  public String save(@Valid @ModelAttribute("categoryObj") Category formCategory, BindingResult bindingResult, Model model) {
     if (bindingResult.hasErrors()) {
       model.addAttribute("categories", categoryRepo.findAll());
       return "/categories/index";
     }
-    categoryRepo.save(categoryForm);
+    categoryRepo.save(formCategory);
     return "redirect:/categories";
   }
   

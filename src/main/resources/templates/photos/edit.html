@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="~{/fragments/head :: head(pageTitle='Edit')}">
+  <body th:with="isEdit=${photo.id!= null}">
+    <div class="container">
+      <nav th:replace="~{/fragments/navbar :: navbar(current='Edit')}"></nav>
+      <h1 class="my-5" th:text="${isEdit ? 'Modifica foto' : 'Nuova foto'}"></h1>
+      <form method="post"
+            enctype="multipart/form-data"
+            th:action="${isEdit ? '/photos/edit/'+ pizza.id : '/photos/create'}"
+            th:object="${photo}"
+            id="photo-form"
+            class="row">
+        <div class="col-6">
+          <label class="form-label" for="photo-title">Titolo foto</label>
+          <input class="form-control" type="text" id="photo-title" th:field="*{title}"
+                 th:errorClass="is-invalid">
+          <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+            <ul>
+              <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+            </ul>
+          </div>
+          <label class="form-label" for="photo-desc">Descrizione</label>
+          <input class="form-control" type="text" id="photo-desc" th:field="*{description}">
+          <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+            <ul>
+              <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-6">
+          <label class="form-label" for="photo-url">Titolo foto</label>
+          <input class="form-control" type="text" id="photo-url" th:field="*{url}"
+                 th:errorClass="is-invalid">
+          <div th:if="${#fields.hasErrors('url')}" class="invalid-feedback">
+            <ul>
+              <li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+            </ul>
+          </div>
+          <label class="form-label" for="photo-visible">Visibile</label>
+          <select class="form-select" id="photo-visible" th:field="*{visible}" th:errorClass="is-invalid">
+            <option value="true" th:selected="${photo.visible}">Sì</option>
+            <option value="false" th:selected="${!photo.visible}">No</option>
+          </select>
+          <div th:if="${#fields.hasErrors('visible')}" class="invalid-feedback">
+            <ul>
+              <li th:each="err : ${#fields.errors('visible')}" th:text="${err}"></li>
+            </ul>
+          </div>
+        </div>
+        <h3>Categorie</h3>
+        <div class="col-12 d-flex flex-wrap">
+          <div class="form-check d-flex align-items-center" th:each="cat : ${categoryList}">
+            <input class="form-check-input me-1" type="checkbox" th:value="${cat.id}" th:id="|cat_${cat.id}|"
+                   th:field="*{categories}">
+            <label class="form-check-label me-3" th:for="|cat_${cat.id}|" th:text="${cat.name}">
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+  </body>
+</html>
