@@ -3,7 +3,6 @@ package com.learning.java.springIlMioFotoalbum.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.groups.Default;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,14 @@ public class Photo {
   
   private String url;
   
-  @Column(columnDefinition = "false")
   private boolean visible;
   
   @ManyToMany
-  @JoinTable(name= "photo_category",
+  @JoinTable(
+    name = "photo_category",
     joinColumns = @JoinColumn(name = "photo_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
+    inverseJoinColumns = @JoinColumn(name = "category_id")
+  )
   private List<Category> categories = new ArrayList<>();
   
   public Integer getId() {
