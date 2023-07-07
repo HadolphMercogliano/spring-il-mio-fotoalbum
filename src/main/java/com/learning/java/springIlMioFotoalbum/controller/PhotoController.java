@@ -3,10 +3,12 @@ package com.learning.java.springIlMioFotoalbum.controller;
 import com.learning.java.springIlMioFotoalbum.dto.PhotoForm;
 import com.learning.java.springIlMioFotoalbum.exeptions.NotUniqueTitleExeption;
 import com.learning.java.springIlMioFotoalbum.exeptions.PhotoNotFoundExeption;
-import com.learning.java.springIlMioFotoalbum.messages.AlertMessage;
-import com.learning.java.springIlMioFotoalbum.messages.AlertMessageType;
+import com.learning.java.springIlMioFotoalbum.alertMessages.AlertMessage;
+import com.learning.java.springIlMioFotoalbum.alertMessages.AlertMessageType;
+import com.learning.java.springIlMioFotoalbum.model.Message;
 import com.learning.java.springIlMioFotoalbum.model.Photo;
 import com.learning.java.springIlMioFotoalbum.repository.CategoryRepo;
+import com.learning.java.springIlMioFotoalbum.repository.MessageRepo;
 import com.learning.java.springIlMioFotoalbum.repository.PhotoRepo;
 import com.learning.java.springIlMioFotoalbum.service.PhotoService;
 import jakarta.validation.Valid;
@@ -31,6 +33,9 @@ public class PhotoController {
   
   @Autowired
   private CategoryRepo categoryRepo;
+  @Autowired
+  private MessageRepo messageRepo;
+  
   
   @Autowired
   PhotoService photoService;
@@ -41,7 +46,10 @@ public class PhotoController {
     //  prende tutte le foto dal database e le aggiungo al model
     //  oppure le filtra in base alla ricerca dell' utente e mostra i risultati.
     List<Photo> photos = photoService.getAll(keyword);
+    List<Message> messages = messageRepo.findAll();
+    
     model.addAttribute("photos", photos);
+    model.addAttribute("messages", messages);
     return "/photos/index";
   }
   

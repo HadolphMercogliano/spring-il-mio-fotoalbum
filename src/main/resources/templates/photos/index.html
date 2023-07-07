@@ -28,7 +28,7 @@
      </div>
 
 <!--  lista foto -->
-      <div class="row my-4" th:if="${photos.size() != 0}">
+      <section class="row my-4" th:if="${photos.size() != 0}">
         <div class="col-3" th:each="p : ${photos}">
           <div class="card h-100">
             <!-- <img class="img-fluid card-img-top" th:src="${p.url}" alt="immagine non disponibile"> -->
@@ -54,12 +54,44 @@
               </form>
             </div>
           </div>
-        
         </div>
-      </div>
+      </section>
       <h2 th:if="${photos.size() == 0 || photos == null}">
         Non ci sono foto disponibili!
       </h2>
+      <section>
+        <h2 class="my-5">Messaggi</h2>
+        <table class="table table-striped" th:if="${messages.size() != 0}">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">E-Mail</th>
+              <th scope="col">Messaggio</th>
+              <th scope="col">Ricevuto</th>
+              <th scope="col">Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="m : ${messages}" class="align-middle">
+              <th scope="row" th:text="${m.id}"></th>
+              <td th:text="${m.email}"></td>
+              <td th:text="${m.message}"></td>
+              <td th:text="${#temporals.format(m.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+              <td class="d-flex align-items-center ">
+               
+                <form method="post"
+                      th:action="@{|/message/delete/${m.getId()}|}">
+                  <button class="btn btn-danger px-2 py-1" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+              </td>
+            
+            </tr>
+          </tbody>
+        </table>
+        <h2 th:if="${messages.size() == 0 || messages == null}">
+          Non ci sono messaggi!
+        </h2>
+      </section>
     </div>
   </body>
 </html>

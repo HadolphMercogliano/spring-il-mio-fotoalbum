@@ -1,7 +1,10 @@
 package com.learning.java.springIlMioFotoalbum.api;
 import com.learning.java.springIlMioFotoalbum.exeptions.PhotoNotFoundExeption;
+import com.learning.java.springIlMioFotoalbum.model.Message;
 import com.learning.java.springIlMioFotoalbum.model.Photo;
+import com.learning.java.springIlMioFotoalbum.repository.MessageRepo;
 import com.learning.java.springIlMioFotoalbum.repository.PhotoRepo;
+import com.learning.java.springIlMioFotoalbum.service.MessageService;
 import com.learning.java.springIlMioFotoalbum.service.PhotoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,10 @@ public class PhotoRestController {
   
   @Autowired
   private PhotoService  photoService;
+  @Autowired
+  private MessageRepo messageRepo;
+  @Autowired
+  private MessageService messageService;
   
   @GetMapping
   public List<Photo> index(@RequestParam Optional<String> keyword) {
@@ -38,4 +45,16 @@ public class PhotoRestController {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }
+  @PostMapping("/message")
+  public Message create(@Valid @RequestBody Message message) {
+      return messageService.create(message);
+    }
+  
+//  CODICE DI TEST
+
+//  @GetMapping("/messageindex")
+//  public List<Message> index(){
+//    return messageRepo.findAll();
+//  }
+
 }
