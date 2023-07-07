@@ -2,6 +2,7 @@ package com.learning.java.springIlMioFotoalbum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -23,8 +24,12 @@ public class Photo {
   @Size(max = 255, message = "La descrizione deve essere di massimo 255 caratteri")
   private String description;
   
-  private String url;
+  @Lob
+  @Column(length= 16777215)
+  private byte[] image;
   
+  
+  @Column(nullable = false, columnDefinition = "boolean default true")
   private boolean visible;
   
   @ManyToMany
@@ -59,12 +64,12 @@ public class Photo {
     this.description = description;
   }
   
-  public String getUrl() {
-    return url;
+  public byte[] getImage() {
+    return image;
   }
   
-  public void setUrl(String url) {
-    this.url = url;
+  public void setImage(byte[] image) {
+    this.image = image;
   }
   
   public boolean isVisible() {

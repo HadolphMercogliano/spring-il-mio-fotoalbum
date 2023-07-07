@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="~{/fragments/head :: head(pageTitle='Foto')}">
+  
+  <body>
+    <div class="container" th:object="${photo}">
+      <nav  th:replace="~{/fragments/navbar :: navbar(current='Foto')}"></nav>
+      
+      <h1 class="text-center my-5" th:text="|Dettaglio foto *{title}|"></h1>
+      <div class="row d-flex justify-content-center">
+        <div class="col-6  d-flex justify-content-center">
+          <div class="card">
+            <!-- <img class="img-fluid card-img-top" th:src="*{url}" alt="" src=""> -->
+            <img class="img-fluid card-img-top" th:src="@{|/files/image/*{id}|}" alt="Immagine" src="">
+            
+            <div class="card-body">
+              <h3 th:text="*{title}"></h3>
+              <p><span th:text="| *{description}|"></span></p>
+              <p class="fw-semibold">Categorie:
+                <span class="fw-normal" th:each="cat : *{categories}" th:text="| ${cat.name}|"></span>
+              </p>
+              <p class="fw-semibold">Visibile:
+                <span class="fw-normal" th:text="*{visible ? 'Visibile' : 'Non visibile'}"></span>
+              </p>
+              
+              <p class="text-end m-0"><a th:href="@{/photos}">Torna alla lista</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,8 +8,10 @@ import com.learning.java.springIlMioFotoalbum.repository.PhotoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +45,9 @@ public class PhotoService {
     photoToPersist.setTitle(photo.getTitle());
     photoToPersist.setDescription(photo.getDescription());
     photoToPersist.setCategories(photo.getCategories());
+    photoToPersist.setImage(photo.getImage());
     photoToPersist.setVisible(photo.isVisible());
+
     return photoRepo.save(photoToPersist);
   }
   
@@ -67,6 +71,9 @@ public class PhotoService {
     photoDb.setDescription(photo.getDescription());
     photoDb.setVisible(photo.isVisible());
     photoDb.setCategories(photo.getCategories());
+//    photoDb.setImage(photo.getImage());
+    if(photo.getImage() != null) { photoDb.setImage(photo.getImage()); }
+    
     return photoRepo.save(photoDb);
   }
   
@@ -90,12 +97,11 @@ public class PhotoService {
     photo.setId(photoForm.getId());
     photo.setTitle(photoForm.getTitle());
     photo.setDescription(photoForm.getDescription());
-    photo.setUrl(photoForm.getUrl());
     photo.setVisible(photoForm.isVisible());
     photo.setCategories(photoForm.getCategories());
     
-//    byte[] coverBytes = multipartFileToByteArray(pizzaForm.getCoverFile());
-//    pizza.setCover(coverBytes);
+    byte[] imageBytes = multipartFileToByteArray(photoForm.getImageFile());
+    photo.setImage(imageBytes);
     
     return photo;
   }
@@ -110,6 +116,16 @@ public class PhotoService {
     
     return photoForm;
   }
-  
+  private byte[] multipartFileToByteArray(MultipartFile mpf){
+    byte[] bytes = null;
+    if (mpf != null && !mpf.isEmpty()){
+      try {
+        bytes = mpf.getBytes();
+      } catch(IOException e){
+        e.printStackTrace();
+      }
+    }
+    return bytes;
+  }
   
 }

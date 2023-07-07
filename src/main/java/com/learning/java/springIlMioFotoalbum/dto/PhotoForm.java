@@ -4,6 +4,7 @@ import com.learning.java.springIlMioFotoalbum.model.Category;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,9 @@ public class PhotoForm {
   @Size(max = 255, message = "La descrizione deve essere di massimo 255 caratteri")
   private String description;
   
-  private String url;
+  private MultipartFile imageFile;
   
-  @NotBlank(message = "Devi specificare la visibilità")
+ 
   private boolean visible;
   
   private List<Category> categories = new ArrayList<>();
@@ -51,12 +52,12 @@ public class PhotoForm {
     this.description = description;
   }
   
-  public String getUrl() {
-    return url;
+  public MultipartFile getImageFile() {
+    return imageFile;
   }
   
-  public void setUrl(String url) {
-    this.url = url;
+  public void setImageFile(MultipartFile imageFile) {
+    this.imageFile = imageFile;
   }
   
   public boolean isVisible() {
