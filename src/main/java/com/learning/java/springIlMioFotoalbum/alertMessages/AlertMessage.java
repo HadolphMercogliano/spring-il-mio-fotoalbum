@@ -1,4 +1,4 @@
-package com.learning.java.springIlMioFotoalbum.messages;
+package com.learning.java.springIlMioFotoalbum.alertMessages;
 
 public class AlertMessage {
   private final AlertMessageType type;
