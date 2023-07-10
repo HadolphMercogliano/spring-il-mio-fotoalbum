@@ -14,6 +14,7 @@ import com.learning.java.springIlMioFotoalbum.service.PhotoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,7 +42,7 @@ public class PhotoController {
   PhotoService photoService;
   
   @GetMapping
-  public String index(@RequestParam Optional<String> keyword,Model model) {
+  public String index(@RequestParam Optional<String> keyword, Model model) {
   
     //  prende tutte le foto dal database e le aggiungo al model
     //  oppure le filtra in base alla ricerca dell' utente e mostra i risultati.

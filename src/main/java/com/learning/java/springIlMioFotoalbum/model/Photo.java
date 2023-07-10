@@ -24,6 +24,7 @@ public class Photo {
   private String description;
   
   @Lob
+  @Size(max = 15777215, message = "La foto deve essere più piccola di 16 Mb")
   @Column(length= 16777215)
   private byte[] image;
   

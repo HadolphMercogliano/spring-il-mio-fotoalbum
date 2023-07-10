@@ -1,7 +1,10 @@
 package com.learning.java.springIlMioFotoalbum.api;
 import com.learning.java.springIlMioFotoalbum.exeptions.PhotoNotFoundExeption;
+import com.learning.java.springIlMioFotoalbum.model.Category;
 import com.learning.java.springIlMioFotoalbum.model.Message;
 import com.learning.java.springIlMioFotoalbum.model.Photo;
+import com.learning.java.springIlMioFotoalbum.model.PhotoResponse;
+import com.learning.java.springIlMioFotoalbum.repository.CategoryRepo;
 import com.learning.java.springIlMioFotoalbum.repository.MessageRepo;
 import com.learning.java.springIlMioFotoalbum.repository.PhotoRepo;
 import com.learning.java.springIlMioFotoalbum.service.MessageService;
@@ -31,14 +34,27 @@ public class PhotoRestController {
   private MessageRepo messageRepo;
   @Autowired
   private MessageService messageService;
+  @Autowired
+  private CategoryRepo categoryRepo;
   
+//  @GetMapping
+//  public List<Photo> index(@RequestParam Optional<String> keyword) {
+//    if (keyword.isPresent()) {
+//      return photoRepo.findAllVisiblePhotosWithSearchTerm(keyword.get());
+//    } else {
+//      return photoRepo.findAllVisiblePhotos();
+//    }
+//  }
   @GetMapping
-  public List<Photo> index(@RequestParam Optional<String> keyword) {
+  public PhotoResponse index(@RequestParam Optional<String> keyword) {
+    List<Photo> photos;
     if (keyword.isPresent()) {
-      return photoRepo.findAllVisiblePhotosWithSearchTerm(keyword.get());
+      photos = photoRepo.findAllVisiblePhotosWithSearchTerm(keyword.get());
     } else {
-      return photoRepo.findAllVisiblePhotos();
+      photos = photoRepo.findAllVisiblePhotos();
     }
+    List<Category> categories = categoryRepo.findAll(); // Sostituisci "categoryRepo" con il tuo repository per le categorie
+    return new PhotoResponse(photos, categories);
   }
   
   @GetMapping("/{id}")

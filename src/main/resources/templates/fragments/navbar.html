@@ -11,15 +11,24 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <!-- nei link appendo la classe active se l'area corrisponde a quella del link -->
+          <ul class="navbar-nav d-flex w-100 justify-content-between">
+            <div class="d-flex">
+              <li class="nav-item d-flex align-items-center ms-2">
+                <p class="m-0 p-0"> Utente:
+                  <span sec:authentication="name"></span></p>
+              </li>
+              <!-- nei link appendo la classe active se l'area corrisponde a quella del link -->
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/photos}"
+                   th:classappend="${current == 'Foto' ? 'active' : ''}">Foto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" th:href="@{/categories}"
+                   th:classappend="${current == 'Categorie' ? 'active' : ''}">Categorie</a>
+              </li>
+            </div>
             <li class="nav-item">
-              <a class="nav-link" th:href="@{/photos}"
-                 th:classappend="${current == 'Foto' ? 'active' : ''}">Foto</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" th:href="@{/categories}"
-                 th:classappend="${current == 'Categorie' ? 'active' : ''}">Categorie</a>
+              <a class="nav-link" th:href="@{/logout}" sec:authorize="hasAuthority('ADMIN')">Logout</a>
             </li>
           </ul>
         </div>

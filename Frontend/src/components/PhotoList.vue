@@ -9,6 +9,7 @@ export default {
       query: "",
       endpoint: "http://localhost:5174/api/v1/photos",
       photoList: [],
+      categoryList: [],
     };
   },
   components: { Photo, ContactForm },
@@ -16,26 +17,18 @@ export default {
   methods: {
     fetchPhotoList() {
       axios.get(this.endpoint).then((response) => {
-        this.photoList = response.data;
-        console.log(this.photoList);
+        this.photoList = response.data.photos;
+        this.categoryList = response.data.categories;
+        console.log(response.data.categories);
       });
     },
     searchPhoto() {
       const url = this.query ? `${this.endpoint}?keyword=${this.query}` : this.endpoint;
       axios.get(url).then((response) => {
-        this.photoList = response.data;
+        this.photoList = response.data.photos;
         console.log(this.photoList);
       });
     },
-
-    // searchPhoto(query) {
-    //   axios
-    //     .get("http://localhost:5174/api/v1/photos" + this.query ? "?keyword=" + this.query : "")
-    //     .then((response) => {
-    //       this.photoList = response.data;
-    //       console.log(this.photoList);
-    //     });
-    // },
   },
   created() {
     this.fetchPhotoList();
