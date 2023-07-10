@@ -46,7 +46,7 @@ export default {
       </div>
     </form>
   </div>
-  <div v-if="this.photoList.length" class="row">
+  <div v-if="this.photoList.length" class="row gy-5">
     <Photo v-for="photo in this.photoList" :key="photo.id" :photo="photo" class="col-4 d-flex" />
   </div>
   <h2 v-else class="">Non ci sono foto</h2>
