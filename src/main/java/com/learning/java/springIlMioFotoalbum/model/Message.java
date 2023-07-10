@@ -2,8 +2,6 @@ package com.learning.java.springIlMioFotoalbum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +13,8 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   
-  @NotNull(message = "L' email è obbligatoria")
+  
+  @NotBlank(message = "L' email è obbligatoria")
   @Column(nullable = false)
   private String email;
   

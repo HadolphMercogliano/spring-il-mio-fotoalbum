@@ -1,6 +1,5 @@
 package com.learning.java.springIlMioFotoalbum.service;
 
-import com.learning.java.springIlMioFotoalbum.exeptions.NotUniqueTitleExeption;
 import com.learning.java.springIlMioFotoalbum.model.Message;
 import com.learning.java.springIlMioFotoalbum.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
