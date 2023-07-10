@@ -7,7 +7,7 @@
           :src="'http://127.0.0.1:5174/files/image/' + photo.id"
           alt="" />
       </div>
-      <div class="card-body">
+      <div class="card-body p-1">
         <h3>{{ photo.title }}</h3>
         <div>
           <p>

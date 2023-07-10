@@ -34,7 +34,11 @@ public class PhotoRestController {
   
   @GetMapping
   public List<Photo> index(@RequestParam Optional<String> keyword) {
-    return photoRepo.findAllVisiblePhotos();
+    if (keyword.isPresent()) {
+      return photoRepo.findAllVisiblePhotosWithSearchTerm(keyword.get());
+    } else {
+      return photoRepo.findAllVisiblePhotos();
+    }
   }
   
   @GetMapping("/{id}")

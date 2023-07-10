@@ -1,8 +1,10 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <nav class="navbar navbar-expand-md dark">
       <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#"
+          ><img class="nav-logo" src="../../public/assets/logo.png" alt=""
+        /></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -33,4 +35,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+nav {
+  height: 70px;
+  background-color: #171717;
+  .navbar-brand {
+    height: 70px;
+    .nav-logo {
+      height: 100%;
+    }
+  }
+}
+</style>

@@ -6,6 +6,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      query: "",
       endpoint: "http://localhost:5174/api/v1/photos",
       photoList: [],
     };
@@ -19,6 +20,22 @@ export default {
         console.log(this.photoList);
       });
     },
+    searchPhoto() {
+      const url = this.query ? `${this.endpoint}?keyword=${this.query}` : this.endpoint;
+      axios.get(url).then((response) => {
+        this.photoList = response.data;
+        console.log(this.photoList);
+      });
+    },
+
+    // searchPhoto(query) {
+    //   axios
+    //     .get("http://localhost:5174/api/v1/photos" + this.query ? "?keyword=" + this.query : "")
+    //     .then((response) => {
+    //       this.photoList = response.data;
+    //       console.log(this.photoList);
+    //     });
+    // },
   },
   created() {
     this.fetchPhotoList();
@@ -28,6 +45,14 @@ export default {
 
 <template>
   <h1 class="my-4">Portfolio</h1>
+  <div class="d-flex justify-content-between align-items-center">
+    <form @submit.prevent="searchPhoto" class="d-flex justify-content-end">
+      <div class="input-group mb-3">
+        <input type="search" class="form-control" placeholder="Cerca per titolo" v-model="query" />
+        <button class="btn btn-outline-primary" type="submit">Cerca</button>
+      </div>
+    </form>
+  </div>
   <div v-if="this.photoList.length" class="row">
     <Photo v-for="photo in this.photoList" :key="photo.id" :photo="photo" class="col-4 d-flex" />
   </div>
